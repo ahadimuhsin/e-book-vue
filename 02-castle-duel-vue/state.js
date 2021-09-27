@@ -12,13 +12,35 @@ var state = {
     // TODO Other things
     turn: 1,
     players: [{
-            name: 'Muhsin Ahadi'
+            name: 'Muhsin Ahadi',
+            // Starting stats
+            food: 10,
+            health: 10,
+            // Is skipping is next turn
+            skipTurn: false,
+            // Skiped turn last time
+            skippedTurn: false,
+            hand: [],
+            lastPlayedCardId: null,
+            dead: false,
         },
         {
-            name: 'The World'
+            name: 'The World',
+            // Starting stats
+            food: 10,
+            health: 10,
+            // Is skipping is next turn
+            skipTurn: false,
+            // Skiped turn last time
+            skippedTurn: false,
+            hand: [],
+            lastPlayedCardId: null,
+            dead: false,
         }
     ],
     currentPlayerIndex: Math.round(Math.random()),
 
     testHand: [],
+    activeOverlay: null,
+
 }

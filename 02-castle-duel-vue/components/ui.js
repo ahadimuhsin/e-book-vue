@@ -16,7 +16,6 @@ Vue.component('top-bar', {
 });
 
 Vue.component('card', {
-    props: ['def'],
     template: `<div class="card" :class="'type-'+ def.type" @click="play">
         <div class="title">{{def.title}}</div>
         <img class="separator" src="svg/card-separator.svg"/>
@@ -27,6 +26,7 @@ Vue.component('card', {
             <div v-html="def.note"></div>
         </div>
     </div>`,
+    props: ['def'],
     methods: {
         play() {
             this.$emit('play');
@@ -36,9 +36,31 @@ Vue.component('card', {
 
 Vue.component('hand', {
     template: `<div class="hand">
-        <div class="wrapper"></div>
+        <div class="wrapper">
         <!-- Cards -->
-        <card v-for="card of cards" :def="card.def"></card>
+        <transition-group name="card" tag="div" class="cards">
+            <card v-for="card of cards" :key="card.uid" :def="card.def"  @play="handlePlay(card)"></card>
+        </transition-group>
+        </div>
     </div>`,
-    props: ['cards']
+    props: ['cards'],
+    methods: {
+        handlePlay(card) {
+            this.$emit('card-play', card)
+        }
+    }
+});
+
+Vue.component('overlay', {
+    template: `<div class="overlay" @click="handleClick">
+        <div class="content">
+        <!-- Slot nanti di sini -->
+        <slot></slot>
+        </div>
+    </div>`,
+    methods: {
+        handleClick() {
+            this.$emit('close');
+        }
+    },
 })

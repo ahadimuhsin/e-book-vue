@@ -5,7 +5,13 @@ new Vue({
     template: `<div id="app">
     <top-bar :turn="turn" :current-player-index="currentPlayerIndex" 
     :players="players"></top-bar>
-    <hand :cards="testHand"></hand>
+    <overlay>
+    Cek Cek </overlay>
+    <transition name="hand">
+    <hand :cards="testHand" v-if="!activeOverlay"
+    @card-play="testPlayCard"></hand>
+    
+    </transition>
     </div>`,
 
     data: state,
@@ -48,6 +54,11 @@ new Vue({
                 id: randomId,
                 def: cards[randomId]
             }
+        },
+        testPlayCard(card) {
+            //remove the card from player's hand
+            const index = this.testHand.indexOf(card);
+            this.testHand.splice(index, 1);
         }
     },
     created() {
