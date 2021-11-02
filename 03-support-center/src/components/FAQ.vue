@@ -2,7 +2,7 @@
   <main class="faq">
     <h1>Frequently Asked Questions</h1>
     <Loading v-if="remoteDataBusy"></Loading>
-    <div class="error" v-if="error">
+    <div class="error" v-if="hasRemoteErrors">
       Can't load the questions
     </div>
     <section class="list">

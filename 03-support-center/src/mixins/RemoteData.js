@@ -6,32 +6,42 @@ export default function(resources) {
             }
 
             //initialize data properties
+            initData.remoteErrors = {};
             for (const key in resources) {
-                initData[key] = null
+                initData[key] = null;
+                initData.remoteErrors[key] = null;
             }
 
-            return initData
+            return initData;
         },
         methods: {
             async fetchResource(key, url) {
-                this.$data.remoteDataLoading++
-                    try {
-                        this.$data[key] = await this.$fetch(url)
-                    } catch (e) {
-                        console.error(e)
-                    }
-                this.$data.remoteDataLoading--
+                this.$data.remoteDataLoading++;
+                //initialize data properties
+                this.$data.remoteErrors[key] = null;
+                try {
+                    this.$data[key] = await this.$fetch(url);
+                } catch (e) {
+                    console.error(e);
+                    this.$data.remoteErrors[key] = e;
+                }
+                this.$data.remoteDataLoading--;
             }
         },
         created() {
             for (const key in resources) {
-                let url = resources[key]
-                this.fetchResource(key, url)
+                let url = resources[key];
+                this.fetchResource(key, url);
             }
         },
         computed: {
             remoteDataBusy() {
                 return this.$data.remoteDataLoading !== 0;
+            },
+            hasRemoteErrors() {
+                return Object.keys(this.$data.remoteErrors).some(
+                    key => this.$data.remoteErrors[key]
+                );
             }
         }
     }
