@@ -85,8 +85,8 @@ export default {
     },
     valid() {
       return (
-        this.username &&
-        this.password &&
+        !!this.username &&
+        !!this.password &&
         (this.mode !== "signup" || this.signUpValid)
       );
     },
@@ -104,7 +104,7 @@ export default {
           password: this.password,
         }),
       })
-      this.$router.push({name: 'home'})
+      this.$router.replace(this.$route.params.wantedRoute || {name: 'home'})
     },
     async signup() {
       await this.$fetch('signup', {

@@ -2,12 +2,14 @@
   <div class="row">
     <input
       class="input"
+      :is="element"
       :class="inputClass"
       :name="name"
       :type="type"
-      :value="text"
+      :value.prop="text"
       :placeholder="placeholder"
       @input="update"
+      v-bind="$attrs"
     />
   </div>
 </template>
@@ -42,8 +44,11 @@ export default {
     inputClass() {
       return {
         invalid: this.invalid,
-      };
+      }
     },
+    element(){
+      return this.type === 'textarea' ? this.type : 'input'
+    }
   },
   methods: {
     update(event) {

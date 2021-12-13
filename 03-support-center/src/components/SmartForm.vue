@@ -17,9 +17,8 @@
 </template>
 
 <script>
-import Loading from "./Loading.vue";
 export default {
-  components: { Loading },
+
   props: {
     title: {
       type: String,
@@ -29,7 +28,7 @@ export default {
       type: Function,
       required: true,
     },
-    Valid: {
+    valid: {
       type: Boolean,
       required: true
     },
@@ -59,5 +58,3 @@ export default {
 };
 </script>
 
-<style>
-</style>
